@@ -1,0 +1,8 @@
+ private void initData(View view) {
+        fab=(FloatingActionButton)view.findViewById(R.id.fab);
+
+        FontDrawable fontDrawable=new FontDrawable(getContext(),R.string.fa_plus_solid,true,false);
+        fontDrawable.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+        fab.setImageDrawable(fontDrawable);
+
+    }
