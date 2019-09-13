@@ -1,0 +1,122 @@
+Style-V21 m?i có andorid:navigationbarColor , android anctionMenutextColor : ddoi mau menuitem
+
+AppBar du?c hi?u nhu 1 action Bar, cho phép 1 s? hành d?ng nhu tìm ki?m
+- H? tr? chuy?n hu?ng qua l?i gi?a các view và các Activity
+- 1 cái AppBar don gi?n nh?t là hi?n th? Activity và overflow Menu ( d?u 3 ch?m)
+- AppBar ch?a ActionBar
+- Cách thêm 1 toolbar trong activity:
++ thêm thu vi?n v7 appcombat vào trong project
++ k? th?a class AppCompatActivity(extends)
+Import suport.v7.widget.toolbar;
++ Trong Android Manifest.xml d?t thu?c tính  No ActionBar theme trong c?p th? <application> :android:theme="@style/Theme.AppCompat.Light.NoActionBar"
++ Trong 1 toolbar d?n layout c?a activity: <android .support.v7.widget.Toolbar
+android: 4dp : chi?u cao c?a Appbar
+android:layout_width="match_parent"
+android:layout_height="?attr/actionBarSize"
+
+
++ T?i Activity g?i phuong th?c setSupportActionBar trong phuong th?c Oncreate() và truy?n vào nó 1 toolbar( d? hi?n th? toolbar)
+set màu cho toolbar: android:back_ground
+android: theme: cho phép custom toolbar
++ActionBar.hide( ?n ActionBar)
+- n?u thêm quá nhi?u ActionBar trong appbar thì actionbar t? d?ng hi?n th? du?i d?ng overflow menu
+- t?t c? nh?ng button action ho?c item thì du?c khai báo trong file res/menu
+- Thêm 1 button action : ch? d?nh action du?c hi?n th? nhu là 1 button trong appbar
++ Thu?c tính app : showAsAction="ifRoom" : action s? du?c hi?n th? nhu 1 button n?u h?t không gian tr?ng thì hi?n th? du?i d?ng overflow menu
++ app: showAsAction ="never" action luôn hi?n th? du?i d?ng overflow menu mà không hi?n th? trên appbar
++always: luon hien thi ra ngoai
++withtext : hien thi dang chu trong overflow menu
+- X? lí Action c?a Menu :
++ khi ngu?i dungf ch?n 1 item trên appbar thì h? th?ng s? g?i onOptionsItemSelected()
++ Ð? nh?n bi?t ngu?i dùng dang click vào item nào trên Menu chúng ta s? s? d?ng phuong th?c MenuItem.getItemId() ( cách x? lí y chang nhu 1 button)
+- Thêm UpAction :
++ Ð? khai báo 1 parent Activity  ? AndroidMandifest chúng ta thêm thu?c tính android : parentACtivityName"tên các Activity cha"( ch? s? d?ng trong phiên b?n andr 4.1)
+- Hi?n UpButton : hi?n th? 1 up button cho activity có Parent Activity thì chúng ta s? g?i phuong th?c setDisplayHomeAsUpEnable(true) c?a AppBar
+- ActionView( menu item, action button ) : cung c?p  nhi?u tính nang
+- Action Provider: ( chia s?) : là 1 action dùng d? tùy ch?nh layout và s? hi?n th?	nhu 1 button ho?c 1 menu item
+- Thêm 1 action View: t?o 1 item trong menu resource nhu m?t action button và thêm m?t trong 2 thu?c tính sau :
++ actionviewClass(da s? xài View Class): class c?a 1 widget implement action(Search View)
++ actionlayout :class resource mô t? action component
+Ð?t thu?c tính ShowAsAction ="Ifroom/never|collapseActionView"
+- Thêm 1 action View : trong phuong th?c OncreateOptionsMenu() g?i phuong th?c (MenuItem)getActionView(tên MenuItem)
+- X? lí s? ki?n trong actionView: OnoptionItemSelected()
++ N?u 1 hành d?ng nào dó khi action expand ho?c collapse thì implement MenuItem.OnActionExpandListener
+- Thêm  1 actionProvider: gi?ng Action View, khác là app: ActionProviderClass ="android.support.v7.widget.ShareActionProvider"
+*Custom AppBar
+- T?o 1 file là values-v21 : Chuy?n ssang package,new -> android resoures directory-> values-v21, sau dó copy 3 file m?c d?nh c?a values vào values-v21
+- M?i cái styles-v21 s? có 1 item , parent c?a nó là cái ph?n theme trong android mandifes:Theme.NoActionBar
+< item name="android:colorPrimary" > mã màu
+- Vào :https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=FFA726 d? l?y mã màu
+popUp là ? trong
+android: colorPrimary: màu n?n(background)
+android :colorPrimaryDark: ph?n trên status 3
+android: textColorPrimary : màu ph?n ch?
+android: navigationBarColor: màu ph?n c?a s?
+android:windowBackground: doi mau phan bgcontent
+android:textColorPrimarySecond : doi mau overflow menu
+sau dó s? copy tên c?a custom vào ph?n android: theme trong android mandifest
+* Ð?i màu popup 
+k? th?a th?ng nào thì nh?n t?t c? các thu?c tính c?a cha	 ( t?c là cái item tru?c do) parent 
+- Vi?t ra 1 cái style riêng k? th?a cái style trên
+- thêm vào cái style dó item name=" android:background" và cho trùng màu c?a colorPrimary 
+- trong layout c?a toolbar, cho 2 thu?c tính là android: Theme và android:popupTheme d?u là"@style/ tên customPopup"
+https://drive.google.com/drive/search?fbclid=IwAR3ndqSfIPF_1As5ntMFs9s5cvLaRQFD7g1RFSJHLDkflJLSgUw5P15NiUo&q=parent:0B4I0iSeUWMotd3ZFbXpXUEVXMVU
+- T?o Menu trong appbar
+t?o 1 layout riêng c?a toolbar và trong activity_main include nó b?ng cú pháp :
+<include android:id="@+id/toolbar"
+layout="@layout/layout_toolbar
+android width+height
+trong menu có item : có id và title
+d?u tiên overide phuong th?c OncreateOptionMenu
+getMenuInflater().inflate(R.menu.my_menu,menu)
+return true;
+- d? nh?n bi?t du?c click vào button nào trong toolbar thì overide phuong th?c OnOptionsItemSelected và s? d?ng swich case cho t?ng id
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_action_one"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/namePs1"
+            android:layout_marginLeft="50dp"
+            android:text="Tên ngu?i 1 "/>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/img"
+        android:id="@+id/imgHeart"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_one"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/namePs2"
+            android:layout_marginLeft="50dp"
+            android:text="Tên ngu?i 2 "/>
+
+    </LinearLayout>
+
+
+Ð?i tiêu d? appbar : s? d?ng android:label=”...” trong android maindifest ? activity
+https://material.io/resources/color/#!/?view.left=0&view.right=0
